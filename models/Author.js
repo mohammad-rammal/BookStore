@@ -1,4 +1,4 @@
-const { required } = require("joi")
+const Joi = require("joi");
 const mongoose = require("mongoose")
 
 const AuthorSchema = new mongoose.Schema({
@@ -30,6 +30,30 @@ const AuthorSchema = new mongoose.Schema({
 
 const Author = mongoose.model("Author", AuthorSchema)
 
+function validateCreateAuthor(obj) {
+    const schema = Joi.object({
+        firstName: Joi.string().trim().min(3).max(200).required(),
+        lastName: Joi.string().trim().min(3).max(200).required(),
+        nationality: Joi.string().trim().min(3).max(100).required(),
+        image: Joi.string(),
+    });
+
+    return schema.validate(obj);
+}
+
+function validateUpdateAuthor(obj) {
+    const schema = Joi.object({
+        firstName: Joi.string().trim().min(3).max(200),
+        lastName: Joi.string().trim().min(3).max(200),
+        nationality: Joi.string().trim().min(3).max(100),
+        image: Joi.string(),
+    });
+
+    return schema.validate(obj);
+}
+
 module.exports = {
-    Author
+    Author,
+    validateCreateAuthor,
+    validateUpdateAuthor
 }

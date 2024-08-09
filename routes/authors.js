@@ -1,20 +1,7 @@
 const express = require("express");
-const Joi = require("joi");
-const { Author } = require("../models/Author");
+const { Author, validateCreateAuthor, validateUpdateAuthor } = require("../models/Author");
 
 const router = express.Router();
-
-const authors = [
-    {
-        id: 1,
-        firstName: "Mhmd",
-        lastName: "Adam",
-        nationality: "Lebanon",
-        image: "image.png",
-    },
-]
-
-
 
 /**
  *  @desc    Get all authors
@@ -23,10 +10,13 @@ const authors = [
  *  @access  public
  */
 router.get("/", async (req, res) => {
-
-    const authorList = await Author.find()
-
-    res.status(200).json(authorList);
+    try {
+        const authorList = await Author.find(); //.sort({ firstName: 1 }).select("firstName lastName -_id")//-1 inverse
+        res.status(200).json(authorList);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Problem in server (Something Wrong) " });
+    }
 });
 
 /**
@@ -35,13 +25,18 @@ router.get("/", async (req, res) => {
  *  @method  Get
  *  @access  public
  */
-router.get("/:id", (req, res) => {
-    // anything from url is string ---
-    const author = authors.find((b) => b.id === parseInt(req.params.id)); // must convert string to number
-    if (author) {
-        res.status(200).json(author);
-    } else {
-        res.status(400).json({ message: "Author not found" });
+router.get("/:id", async (req, res) => {
+    try {
+        const author = await Author.findById(req.params.id);
+
+        if (author) {
+            res.status(200).json(author);
+        } else {
+            res.status(400).json({ message: "Author not found" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Problem in server " });
     }
 });
 
@@ -67,16 +62,14 @@ router.post("/", async (req, res) => {
             lastName: req.body.lastName,
             nationality: req.body.nationality,
             image: req.body.image,
-        })
+        });
 
-        const result = await author.save() // save will get promise , so must have await, so must be async
+        const result = await author.save(); // save will get promise , so must have await, so must be async
         res.status(201).json(author); // 201 created successfully
-
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: "Problem in server " })
+        console.log(error);
+        res.status(500).json({ message: "Problem in server " });
     }
-
 });
 
 /**
@@ -85,17 +78,28 @@ router.post("/", async (req, res) => {
  *  @method  Put
  *  @access  public
  */
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
     const { error } = validateUpdateAuthor(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
-
-    const author = authors.find((b) => b.id === parseInt(req.params.id));
-    if (author) {
-        res.status(200).json({ message: "Author has been updated" });
-    } else {
-        res.status(404).json({ message: "Author not found" });
+    try {
+        const author = await Author.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: {
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    nationality: req.body.nationality,
+                    image: req.body.image,
+                },
+            },
+            { new: true }
+        );
+        res.status(200).json(author);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Problem in server " });
     }
 });
 
@@ -105,35 +109,21 @@ router.put("/:id", (req, res) => {
  *  @method  Delete
  *  @access  public
  */
-router.delete("/:id", (req, res) => {
-    const author = authors.find((b) => b.id === parseInt(req.params.id));
-    if (author) {
-        res.status(200).json({ message: "Author has been deleted" });
-    } else {
-        res.status(404).json({ message: "Author not found" });
+router.delete("/:id", async (req, res) => {
+    try {
+        const author = await Author.findById(req.params.id)
+        if (author) {
+            await Author.findByIdAndDelete(req.params.id)
+            res.status(200).json({ message: "Author has been deleted" });
+        } else {
+            res.status(404).json({ message: "Author not found" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Problem in server " });
     }
 });
 
-function validateCreateAuthor(obj) {
-    const schema = Joi.object({
-        firstName: Joi.string().trim().min(3).max(200).required(),
-        lastName: Joi.string().trim().min(3).max(200).required(),
-        nationality: Joi.string().trim().min(3).max(200).required(),
-        image: Joi.string(),
-    });
 
-    return schema.validate(obj);
-}
 
-function validateUpdateAuthor(obj) {
-    const schema = Joi.object({
-        firstName: Joi.string().trim().min(3).max(200),
-        lastName: Joi.string().trim().min(3).max(200),
-        nationality: Joi.string().trim().min(3).max(200),
-        image: Joi.string(),
-    });
-
-    return schema.validate(obj);
-}
-
-module.exports = router
+module.exports = router;
