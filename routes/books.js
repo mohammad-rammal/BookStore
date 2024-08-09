@@ -8,7 +8,7 @@ const books = [
     {
         id: 1,
         title: "book1",
-        author: "Nasim",
+        author: "Mohmd",
         description: "About Black",
         price: 10,
         cover: "soft cover",
