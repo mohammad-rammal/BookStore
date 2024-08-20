@@ -6,6 +6,7 @@ npm i mongoose
 npm i express-async-handler // as try & catch
 npm i dotenv
 npm i bcryptjs
+npm i jsonwebtoken
 
 
 npm start
