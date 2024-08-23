@@ -10,3 +10,5 @@ npm i jsonwebtoken
 
 
 npm start
+
+node seeder -import / -remove

@@ -39,4 +39,4 @@ bower_components/
 *.lock
 coverage/
 *.tsbuildinfo
-
+COMMANDS.md
