@@ -32,7 +32,7 @@ npm start
 
 ├── views/              # Views functions
 
-├── server.js           # Entry point for the application
+├── app.js           # Entry point for the application
 
 └── README.md           # Project documentation
 
