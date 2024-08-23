@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const booksPath = require("./routes/books");
 const authorPath = require("./routes/authors")
 const authPath = require("./routes/auth")
+const usersPath = require("./routes/users")
 const dotenv = require("dotenv");
 const logger = require("./middlewares/logger");
 const { notFound, errorHandler } = require("./middlewares/errors");
@@ -27,6 +28,7 @@ app.use(logger);
 app.use("/api/books", booksPath);
 app.use("/api/authers", authorPath);
 app.use("/api/auth", authPath)
+app.use("/api/users", usersPath)
 
 // Not Found Middleware
 app.use(notFound);
