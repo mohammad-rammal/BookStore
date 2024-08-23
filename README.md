@@ -1,4 +1,5 @@
-![BookStore](https://res.cloudinary.com/dftxzx2zc/image/upload/v1724451272/cv/f0etakxap6h4fmbtksgt.png)
+![BookStore]<img src="https://res.cloudinary.com/dftxzx2zc/image/upload/v1724451272/cv/f0etakxap6h4fmbtksgt.png" alt="My Image" width="400" height="300"/>
+
 
 # 🖤 Node.js API with Express.js - BookStore API 🖤
 
