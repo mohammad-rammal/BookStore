@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { User } = require("../models/User");
+const { User, validateChangePassword } = require("../models/User");
 const bycrpt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -75,13 +75,13 @@ const sendForgotPasswordLink = asyncHandler(async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, success) {
         if (error) {
-            console.log(error)
+            console.log(error);
+            res.status(500).json({ message: "Something Wrong! (Failed)" })
         } else {
             console.log("Email sent: " + success.response);
+            res.render("link-send");
         }
     });
-
-    res.render("link-send")
 
 })
 
@@ -121,12 +121,14 @@ const getForgotPasswordLink = asyncHandler(async (req, res) => {
  */
 const getResetPassword = asyncHandler(async (req, res) => {
 
+    const { error } = validateChangePassword(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message })
+    }
+
     const user = await User.findById(req.params.userId);
     if (!user) {
         return res.status(404).json({ message: "User not found! (No Account For This Email)" })
-    }
-    if (req.body.password < 8) {
-        return res.status(404).json({ message: "Password must be not less than 8 chars" })
     }
 
     const secretKey = process.env.JWT_SECRET_KEY + user.password;

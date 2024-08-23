@@ -10,6 +10,7 @@ npm i jsonwebtoken
 npm i ejs
 npm i nodemailer
 npm i multer
+npm i joi-password-complexity
 
 
 
