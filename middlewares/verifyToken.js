@@ -18,6 +18,28 @@ function verifyToken(req, res, next) {
     }
 }
 
+function verifyTokenAndAuthorization(req, res, next) {
+    verifyToken(req, res, () => {
+        if (req.user.id == req.params.id || req.user.isAdmin) {
+            next();
+        } else {
+            return res.status(403).json({ message: "You are not allowed! (Don't have permissions)" })
+        }
+    })
+}
+
+function verifyTokenAndAdmin(req, res, next) {
+    verifyToken(req, res, () => {
+        if (req.user.isAdmin) {
+            next();
+        } else {
+            return res.status(403).json({ message: "You are not allowed! (Only Admin)" })
+        }
+    })
+}
+
 module.exports = {
-    verifyToken
+    verifyToken,
+    verifyTokenAndAuthorization,
+    verifyTokenAndAdmin
 }
