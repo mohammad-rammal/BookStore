@@ -1,0 +1,465 @@
+openapi: 3.0.0
+info:
+  title: Bookstore API
+  version: 1.0.0
+  description: API documentation for the Bookstore API.
+    description: |
+    API documentation for the Bookstore application.
+
+    **Contact Information:**
+
+    - **Name:** Mohammad Rammal
+    - **LinkedIn:** [Mohammad Rammal](https://www.linkedin.com/in/mohammad-rammal)
+    - **Email:** mohammad.rammal@hotmail.com
+servers:
+  - url: http://localhost:5000/api
+    description: Local server
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '200':
+          description: User registered successfully
+        '400':
+          description: Bad request
+
+  /auth/login:
+    post:
+      summary: Login an existing user
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User logged in successfully
+        '401':
+          description: Unauthorized
+
+  /authors:
+    get:
+      summary: Retrieve all authors
+      operationId: getAllAuthors
+      responses:
+        '200':
+          description: List of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    bio:
+                      type: string
+    post:
+      summary: Create a new author
+      operationId: createNewAuthor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        '201':
+          description: Author created successfully
+        '401':
+          description: Unauthorized
+
+  /authors/{id}:
+    get:
+      summary: Retrieve an author by ID
+      operationId: getAuthorById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Author details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  bio:
+                    type: string
+        '404':
+          description: Author not found
+    put:
+      summary: Update an author
+      operationId: updateAuthor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        '200':
+          description: Author updated successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Author not found
+    delete:
+      summary: Delete an author
+      operationId: deleteAuthor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Author deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Author not found
+
+  /books:
+    get:
+      summary: Retrieve all books
+      operationId: getAllBooks
+      responses:
+        '200':
+          description: List of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    authorId:
+                      type: string
+    post:
+      summary: Create a new book
+      operationId: createBook
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                authorId:
+                  type: string
+                publishedDate:
+                  type: string
+      responses:
+        '201':
+          description: Book created successfully
+        '401':
+          description: Unauthorized
+
+  /books/{id}:
+    get:
+      summary: Retrieve a book by ID
+      operationId: getBookById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  authorId:
+                    type: string
+                  publishedDate:
+                    type: string
+        '404':
+          description: Book not found
+    put:
+      summary: Update a book
+      operationId: updateBook
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                authorId:
+                  type: string
+                publishedDate:
+                  type: string
+      responses:
+        '200':
+          description: Book updated successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Book not found
+    delete:
+      summary: Delete a book
+      operationId: deleteBook
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Book deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Book not found
+
+  /password/forgot-password:
+    get:
+      summary: Get forgot password page
+      operationId: getForgotPassword
+      responses:
+        '200':
+          description: Forgot password page
+    post:
+      summary: Send forgot password link
+      operationId: sendForgotPasswordLink
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Forgot password link sent
+        '400':
+          description: Bad request
+
+  /password/reset-password/{userId}/{token}:
+    get:
+      summary: Get reset password page
+      operationId: getForgotPasswordLink
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reset password page
+    post:
+      summary: Reset password
+      operationId: getResetPassword
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+      responses:
+        '200':
+          description: Password reset successfully
+        '400':
+          description: Bad request
+
+  /upload:
+    post:
+      summary: Upload an image
+      operationId: uploadImage
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Image uploaded successfully
+        '401':
+          description: Unauthorized
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          example: johndoe
+        password:
+          type: string
+          example: secretpassword
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        password:
+          type: string
+          example: secretpassword
+
+    Author:
+      type: object
+      properties:
+        name:
+          type: string
+          example: J.K. Rowling
+        bio:
+          type: string
+          example: British author, best known for the Harry Potter series
+
+    Book:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Harry Potter and the Sorcerer's Stone
+        authorId:
+          type: string
+          example: 60c72b2f9b1e8d2f7a2e8a2e
+        publishedDate:
+          type: string
+          format: date
+          example: 1997-06-26
+        isbn:
+          type: string
+          example: 978-0747532699
+
+    ForgotPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+
+    ResetPassword:
+      type: object
+      properties:
+        newPassword:
+          type: string
+          example: newsecretpassword
+        confirmPassword:
+          type: string
+          example: newsecretpassword

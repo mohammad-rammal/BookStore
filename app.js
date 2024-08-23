@@ -7,6 +7,8 @@ const connectToDB = require("./config/db");
 const path = require("path");
 const helmet = require("helmet");
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 
 // Connection To Database
 connectToDB();
@@ -32,6 +34,12 @@ app.use(cors({
 
 // EJS
 app.set("view engine", "ejs");
+
+// Load the YAML file
+const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
+
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.use("/api/books", require("./routes/books"));
