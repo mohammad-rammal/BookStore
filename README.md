@@ -1,10 +1,3 @@
-███████╗ ██████╗ ██████╗ ███████╗███████╗██╗ ██████╗ 
-██╔════╝██╔════╝ ██╔══██╗██╔════╝██╔════╝██║██╔════╝ 
-█████╗  ██║  ███╗██████╔╝█████╗  █████╗  ██║██║  ███╗
-██╔══╝  ██║   ██║██╔═══╝ ██╔══╝  ██╔══╝  ██║██║   ██║
-██║     ╚██████╔╝██║     ███████╗██║     ██║╚██████╔╝
-╚═╝      ╚═════╝ ╚═╝     ╚══════╝╚═╝     ╚═╝ ╚═════╝ 
-
 # 🖤 Node.js API with Express.js - BookStore API 🖤
 
 Welcome to the **BookStore API** course repository! This project serves as a comprehensive guide for building RESTful APIs using Node.js, Express.js, and MongoDB. Whether you're a beginner or looking to refine your skills, this repository provides all the resources and code examples you'll need.
@@ -26,14 +19,23 @@ npm start
 
 .
 ├── controllers/        # Logic for handling routes and requests
+
 ├── models/             # Mongoose schemas and models
+
 ├── routes/             # API route definitions
+
 ├── middleware/         # Custom middleware functions
+
 ├── config/             # Configuration files (e.g., database connection)
+
 ├── utils/              # Utility functions
+
 ├── views/              # Views functions
+
 ├── server.js           # Entry point for the application
+
 └── README.md           # Project documentation
+
 
 🧠 **Course Content**
 
