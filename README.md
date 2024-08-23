@@ -57,4 +57,4 @@ npm start
 - Error Handling: Centralized error handling using custom middleware.
 - Environment Variables: Manage sensitive data securely using .env files.
 
-🔗 **Connect with me on LinkedIn: [Your Name](https://www.linkedin.com/in/mohammad-rammal/)**
+🔗 **Connect with me on LinkedIn: [Mohammad Rammal](https://www.linkedin.com/in/mohammad-rammal/)**
