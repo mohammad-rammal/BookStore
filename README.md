@@ -1,3 +1,5 @@
+![BookStore](https://res.cloudinary.com/dftxzx2zc/image/upload/v1724451272/cv/f0etakxap6h4fmbtksgt.png)
+
 # 🖤 Node.js API with Express.js - BookStore API 🖤
 
 Welcome to the **BookStore API** course repository! This project serves as a comprehensive guide for building RESTful APIs using Node.js, Express.js, and MongoDB. Whether you're a beginner or looking to refine your skills, this repository provides all the resources and code examples you'll need.
