@@ -14,6 +14,7 @@ npm i joi-password-complexity
 npm i helmet
 npm i cors
 
+npm install swagger-ui-express swagger-jsdoc
 
 npm start
 
