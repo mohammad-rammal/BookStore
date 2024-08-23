@@ -106,6 +106,52 @@ const books = [
     }
 ];
 
+const authors = [
+    {
+        firstName: "Evelyn",
+        lastName: "Harper",
+        nationality: "British",
+    },
+    {
+        firstName: "Carlos",
+        lastName: "Martinez",
+        nationality: "Spanish",
+    },
+    {
+        firstName: "Aiko",
+        lastName: "Tanaka",
+        nationality: "Japanese",
+    },
+    {
+        firstName: "Luca",
+        lastName: "Rossi",
+        nationality: "Italian",
+    },
+    {
+        firstName: "Nina",
+        lastName: "Petrova",
+        nationality: "Russian",
+    },
+    {
+        firstName: "Ahmed",
+        lastName: "El-Sayed",
+        nationality: "Egyptian",
+    },
+    {
+        firstName: "Sophia",
+        lastName: "Müller",
+        nationality: "German",
+    },
+    {
+        firstName: "Arjun",
+        lastName: "Patel",
+        nationality: "Indian",
+    }
+];
 
 
-module.exports = books;
+
+module.exports = {
+    authors,
+    books,
+}

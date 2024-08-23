@@ -16,7 +16,17 @@ const router = express.Router();
  *  @access  public
  */
 router.get("/", asyncHandler(async (req, res) => {
-    const authorList = await Author.find(); //.sort({ firstName: 1 }).select("firstName lastName -_id")//-1 inverse
+    // const authorList = await Author.find(); //.sort({ firstName: 1 }).select("firstName lastName -_id")//-1 inverse
+    
+    const { pageNumber } = req.query;
+    const authorsPerPage = 2;
+    let authorList;
+    if (pageNumber) {
+        authorList = await Author.find().skip((pageNumber - 1) * authorsPerPage).limit(authorsPerPage);
+    } else {
+        authorList = await Author.find();
+    }
+
     res.status(200).json(authorList);
 })
 );
