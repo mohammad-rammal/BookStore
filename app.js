@@ -13,13 +13,18 @@ const app = express();
 
 // Apply Middleware
 app.use(express.json()); // JSON to JS object
+app.use(express.urlencoded({ extended: false }));
 app.use(logger);
 
-//Routes
+// EJS
+app.set('view engine', 'ejs');
+
+// Routes
 app.use("/api/books", require("./routes/books"));
 app.use("/api/authers", require("./routes/authors"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
+app.use("/password", require("./routes/password"));
 
 // Not Found Middleware
 app.use(notFound);

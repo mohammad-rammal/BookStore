@@ -7,6 +7,9 @@ npm i express-async-handler // as try & catch
 npm i dotenv
 npm i bcryptjs
 npm i jsonwebtoken
+npm i ejs
+npm i nodemailer
+
 
 
 npm start
