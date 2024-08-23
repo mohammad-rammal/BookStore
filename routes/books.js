@@ -14,7 +14,18 @@ const router = express.Router();
  *  @access  public
  */
 router.get("/", asyncHandler(async (req, res) => {
-    const books = await Book.find().populate("author", ["_id", "firstName", "lastName"]);
+    const { minPrice, maxPrice } = req.query;
+    
+    let books;
+    if (minPrice && maxPrice) {
+        books = await Book.find({ price: { $gte: minPrice, $lte: maxPrice } }) //eq //ne //lt //lte //gt //gte //in:[3,6,9]
+            .populate("author", ["_id", "firstName", "lastName"]);
+    } else {
+        books = await Book.find().populate("author", ["_id", "firstName", "lastName"]);
+    }
+
+
+
     res.status(200).json(books);
 }));
 
