@@ -2,28 +2,10 @@ const express = require("express");
 const Joi = require("joi");
 const asyncHandler = require("express-async-handler");
 const { validateCreateBook, validateUpdateBook, Book } = require("../models/Book");
+const { verifyTokenAndAdmin } = require("../middlewares/verifyToken");
 
 const router = express.Router();
 
-const books = [
-    //object array
-    {
-        id: 1,
-        title: "book1",
-        author: "Mohmd",
-        description: "About Black",
-        price: 10,
-        cover: "soft cover",
-    },
-    {
-        id: 2,
-        title: "book2",
-        author: "Ahmad",
-        description: "About White",
-        price: 3,
-        cover: "Hard cover",
-    },
-];
 
 /**
  *  @desc    Get all books
@@ -56,9 +38,9 @@ router.get("/:id", asyncHandler(async (req, res) => {
  *  @desc    Create new book
  *  @route   /api/books
  *  @method  Post
- *  @access  public
+ *  @access  private (Only admin)
  */
-router.post("/", asyncHandler(async (req, res) => {
+router.post("/", verifyTokenAndAdmin, asyncHandler(async (req, res) => {
     //console.log(req.body) // req from client (body) is json file not object,, so must convert json to object
 
     const { error } = validateCreateBook(req.body);// result
@@ -83,9 +65,9 @@ router.post("/", asyncHandler(async (req, res) => {
  *  @desc    Update a book
  *  @route   /api/books/:id
  *  @method  Put
- *  @access  public
+ *  @access  private (Only admin)
  */
-router.put("/:id", asyncHandler(async (req, res) => {
+router.put("/:id", verifyTokenAndAdmin, asyncHandler(async (req, res) => {
     const { error } = validateUpdateBook(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
@@ -109,9 +91,9 @@ router.put("/:id", asyncHandler(async (req, res) => {
  *  @desc    Delete a book
  *  @route   /api/books/:id
  *  @method  Delete
- *  @access  public
+ *  @access  private (Only admin)
  */
-router.delete("/:id", asyncHandler(async (req, res) => {
+router.delete("/:id", verifyTokenAndAdmin, asyncHandler(async (req, res) => {
     const book = await Book.findById(req.params.id);
     if (book) {
         await Book.findByIdAndDelete(req.params.id)
