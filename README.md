@@ -17,7 +17,7 @@ npm start
 
 📂 **Project Structure**
 
-.
+
 ├── controllers/        # Logic for handling routes and requests
 
 ├── models/             # Mongoose schemas and models
