@@ -48,6 +48,7 @@ npm start
 07. Advanced Topics: Pagination, Filtering, etc.
 08. Security Best Practices
 
+
 🛠 **Features**
 
 - CRUD Operations: Complete Create, Read, Update, and Delete functionalities.
@@ -56,5 +57,6 @@ npm start
 - File Upload: Handle image and file uploads.
 - Error Handling: Centralized error handling using custom middleware.
 - Environment Variables: Manage sensitive data securely using .env files.
+
 
 🔗 **Connect with me on LinkedIn: [Mohammad Rammal](https://www.linkedin.com/in/mohammad-rammal/)**
