@@ -9,6 +9,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const getWelcomePageHtml = require("./utils/welcomePage");
 
 // Connection To Database
 connectToDB();
@@ -41,6 +42,7 @@ const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 // Serve Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+
 // Routes
 app.use("/api/books", require("./routes/books"));
 app.use("/api/authers", require("./routes/authors"));
@@ -48,6 +50,10 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/upload", require("./routes/upload"));
 app.use("/password", require("./routes/password"));
+
+app.get('/', (req, res) => {
+    res.send(getWelcomePageHtml());
+});
 
 // Not Found Middleware
 app.use(notFound);
