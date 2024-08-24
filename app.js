@@ -9,7 +9,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-const getWelcomePageHtml = require("./utils/welcomePage");
 
 // Connection To Database
 connectToDB();
@@ -52,7 +51,7 @@ app.use("/api/upload", require("./routes/upload"));
 app.use("/password", require("./routes/password"));
 
 app.get('/', (req, res) => {
-    res.send(getWelcomePageHtml());
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Not Found Middleware
