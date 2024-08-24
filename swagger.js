@@ -10,7 +10,7 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: 'http://localhost:5000/api',
+            url: process.env.MONGO_URI,
             description: 'Local server',
         },
     ],
@@ -18,7 +18,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['./routes/*.js'], 
+    apis: ['./routes/*.js'],
 };
 
 const specs = swaggerJsdoc(options);
