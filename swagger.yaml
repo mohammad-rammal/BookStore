@@ -2,10 +2,9 @@ openapi: 3.0.0
 info:
   title: Bookstore API
   version: 1.0.0
-  description: API documentation for the Bookstore API.
-    |
+  description: |
+    API documentation for the Bookstore API.
     
-
     **Contact Information:**
 
     - **Name:** Mohammad Rammal
@@ -16,9 +15,23 @@ servers:
   - url: http://localhost:5000/api
     description: Local server
 
+tags:
+  - name: Auth
+    description: Endpoints related to user authentication and registration
+  - name: Authors
+    description: Endpoints for managing authors
+  - name: Books
+    description: Endpoints for managing books
+  - name: Password
+    description: Endpoints related to password management
+  - name: Upload
+    description: Endpoint for file uploads
+
 paths:
   /auth/register:
     post:
+      tags:
+        - Auth
       summary: Register a new user
       operationId: registerUser
       requestBody:
@@ -42,6 +55,8 @@ paths:
 
   /auth/login:
     post:
+      tags:
+        - Auth
       summary: Login an existing user
       operationId: loginUser
       requestBody:
@@ -63,6 +78,8 @@ paths:
 
   /authors:
     get:
+      tags:
+        - Authors
       summary: Retrieve all authors
       operationId: getAllAuthors
       responses:
@@ -82,6 +99,8 @@ paths:
                     bio:
                       type: string
     post:
+      tags:
+        - Authors
       summary: Create a new author
       operationId: createNewAuthor
       security:
@@ -105,6 +124,8 @@ paths:
 
   /authors/{id}:
     get:
+      tags:
+        - Authors
       summary: Retrieve an author by ID
       operationId: getAuthorById
       parameters:
@@ -130,6 +151,8 @@ paths:
         '404':
           description: Author not found
     put:
+      tags:
+        - Authors
       summary: Update an author
       operationId: updateAuthor
       security:
@@ -159,6 +182,8 @@ paths:
         '404':
           description: Author not found
     delete:
+      tags:
+        - Authors
       summary: Delete an author
       operationId: deleteAuthor
       security:
@@ -179,6 +204,8 @@ paths:
 
   /books:
     get:
+      tags:
+        - Books
       summary: Retrieve all books
       operationId: getAllBooks
       responses:
@@ -198,6 +225,8 @@ paths:
                     authorId:
                       type: string
     post:
+      tags:
+        - Books
       summary: Create a new book
       operationId: createBook
       security:
@@ -223,6 +252,8 @@ paths:
 
   /books/{id}:
     get:
+      tags:
+        - Books
       summary: Retrieve a book by ID
       operationId: getBookById
       parameters:
@@ -250,6 +281,8 @@ paths:
         '404':
           description: Book not found
     put:
+      tags:
+        - Books
       summary: Update a book
       operationId: updateBook
       security:
@@ -281,6 +314,8 @@ paths:
         '404':
           description: Book not found
     delete:
+      tags:
+        - Books
       summary: Delete a book
       operationId: deleteBook
       security:
@@ -301,12 +336,16 @@ paths:
 
   /password/forgot-password:
     get:
+      tags:
+        - Password
       summary: Get forgot password page
       operationId: getForgotPassword
       responses:
         '200':
           description: Forgot password page
     post:
+      tags:
+        - Password
       summary: Send forgot password link
       operationId: sendForgotPasswordLink
       requestBody:
@@ -326,6 +365,8 @@ paths:
 
   /password/reset-password/{userId}/{token}:
     get:
+      tags:
+        - Password
       summary: Get reset password page
       operationId: getForgotPasswordLink
       parameters:
@@ -343,6 +384,8 @@ paths:
         '200':
           description: Reset password page
     post:
+      tags:
+        - Password
       summary: Reset password
       operationId: getResetPassword
       parameters:
@@ -373,6 +416,8 @@ paths:
 
   /upload:
     post:
+      tags:
+        - Upload
       summary: Upload an image
       operationId: uploadImage
       security:
@@ -384,14 +429,15 @@ paths:
             schema:
               type: object
               properties:
-                image:
+                file:
                   type: string
                   format: binary
       responses:
         '200':
           description: Image uploaded successfully
-        '401':
-          description: Unauthorized
+        '400':
+          description: Bad request
+
 
 components:
   schemas:
