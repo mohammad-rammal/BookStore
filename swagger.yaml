@@ -12,8 +12,8 @@ info:
     - **LinkedIn:** [Mohammad Rammal](https://www.linkedin.com/in/mohammad-rammal)
     - **Email:** mohammad.rammal@hotmail.com
 servers:
-  - url: http://localhost:5000/api
-    description: Local server
+  - url: https://bookstore-kkir.onrender.com/api
+    description: Production server
 
 tags:
   - name: Auth

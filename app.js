@@ -29,7 +29,9 @@ app.use(helmet());
 
 // Cors Policy
 app.use(cors({
-    origin: process.env.FRONTEND_HOST
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // EJS
