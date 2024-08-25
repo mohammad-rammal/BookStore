@@ -17,46 +17,101 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <title>Bookstore API Documentation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
             color: #333;
-            text-align: center;
-            padding: 0;
             margin: 0;
+            padding: 0;
+            text-align: center;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .logo {
+            width: 200px;
+            margin: 20px auto;
+            border-radius: 50%;
+            border: 5px solid #007bff;
+            padding: 5px;
+            background: #fff;
         }
 
         h1 {
-            color: #5a5a5a;
+            font-size: 2.8em;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #007bff;
             margin-top: 20px;
+            border-bottom: 2px solid #007bff;
+            display: inline-block;
+            padding-bottom: 5px;
         }
 
         p {
-            font-size: 18px;
-            color: #666;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+            margin: 20px 0;
         }
 
         a {
             color: #007bff;
             text-decoration: none;
             font-weight: bold;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
         }
 
         a:hover {
-            text-decoration: underline;
+            border-bottom: 2px solid #007bff;
         }
 
-        .logo {
-            width: 150px;
-            margin: 20px auto;
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #e1e1e1;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-top: 0;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 0;
+        }
+
+        .card ul li {
+            background: url('https://img.icons8.com/ios/50/007bff/checkmark.png') no-repeat left center;
+            background-size: 20px;
+            padding-left: 30px;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .footer {
@@ -64,19 +119,60 @@
             font-size: 14px;
             color: #999;
         }
+
+        .footer p {
+            margin: 0;
+        }
+        
     </style>
 </head>
 
 <body>
     <div class="container">
-        <img src="https://res.cloudinary.com/dftxzx2zc/image/upload/v1724451272/cv/f0etakxap6h4fmbtksgt.png"
-            alt="Bookstore Logo" class="logo">
-        <h1>Welcome to the Bookstore API Documentation!</h1>
-        <p>Explore our API endpoints and detailed documentation to integrate seamlessly with our service.</p>
-        <p>For comprehensive API details, please visit the <a href="https://bookstore-kkir.onrender.com/api-docs"
+        <i class="fas fa-book" style="font-size: 100px; color: #007bff;"></i>
+
+
+        
+        <h1>Welcome to the Bookstore API!</h1>
+        <p>Your gateway to a seamless book management experience. Our API provides a robust platform to manage and interact with book and author data, user accounts, and more.</p>
+        <p>Explore our API endpoints and integrate with ease by visiting the <a href="https://bookstore-kkir.onrender.com/api-docs"
                 target="_blank">API Documentation</a>.</p>
+
+        <div class="card">
+            <h2>Project Highlights</h2>
+            <p>Our Bookstore API offers a comprehensive suite of features designed to facilitate efficient book and author management, user interactions, and more. Here’s what you can do:</p>
+            <ul>
+                <li>Create, read, update, and delete book records.</li>
+                <li>Manage author details, including their biographies and profile images.</li>
+                <li>Handle user registration, authentication, and profile management.</li>
+                <li>Upload and manage images for books and authors.</li>
+                <li>Send email notifications for account activities and password recovery.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Technical Features</h2>
+            <p>We’ve implemented various features to ensure the robustness and reliability of our API:</p>
+            <ul>
+                <li><strong>Efficient Database Operations:</strong> Optimized queries to prevent timeouts and ensure smooth performance.</li>
+                <li><strong>Secure CORS Configuration:</strong> Properly configured CORS to allow requests from authorized sources.</li>
+                <li><strong>Comprehensive Error Handling:</strong> Detailed error messages and logging for easier troubleshooting.</li>
+                <li><strong>Advanced Security Measures:</strong> Data protection, input validation, and secure password handling.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Testing and Deployment</h2>
+            <p>Ensure a flawless API experience through rigorous testing and efficient deployment:</p>
+            <ul>
+                <li><strong>Testing with Postman:</strong> Create and manage Postman collections for comprehensive API testing.</li>
+                <li><strong>Debugging:</strong> Use Postman to identify and resolve API issues, with enhanced logging for insights.</li>
+                <li><strong>Deployment:</strong> Deploy the API on Render, with continuous monitoring for performance and errors.</li>
+            </ul>
+        </div>
+
         <div class="footer">
-            <p>mohammad.rammal@hotmail.com</p>
+            <p>© 2024 Bookstore API Documentation. For support or inquiries, contact us at <a href="mailto:mohammad.rammal@hotmail.com">mohammad.rammal@hotmail.com</a>.</p>
         </div>
     </div>
 </body>
