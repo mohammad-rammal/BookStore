@@ -13,7 +13,6 @@ const {
  *  @method  POST
  *  @access  public
  */
-
 const register = asyncHandler(async (req, res) => {
     const { error } = validateRegisterUser(req.body);
     if (error) {
