@@ -1,8 +1,8 @@
-const asyncHandler = require("express-async-handler");
-const { User, validateChangePassword } = require("../models/User");
-const bycrpt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const asyncHandler = require('express-async-handler');
+const { User, validateChangePassword } = require('../models/User');
+const bycrpt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 /**
  *  @desc    Get Forgot Password
@@ -11,8 +11,8 @@ const nodemailer = require("nodemailer");
  *  @access  public
  */
 const getForgotPassword = asyncHandler((req, res) => {
-    res.render('forgot-password')
-})
+    res.render('forgot-password');
+});
 
 /**
  *  @desc    Send Forgot Password
@@ -23,28 +23,30 @@ const getForgotPassword = asyncHandler((req, res) => {
 const sendForgotPasswordLink = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-        return res.status(404).json({ message: "User not found! (No Account For This Email)" })
+        return res
+            .status(404)
+            .json({ message: 'User not found! (No Account For This Email)' });
     }
 
     const secretKey = process.env.JWT_SECRET_KEY + user.password;
     const token = jwt.sign({ email: user.email, id: user.id }, secretKey, {
-        expiresIn: '20m'
+        expiresIn: '20m',
     });
 
     const link = `http://localhost:${process.env.PORT}/password/reset-password/${user._id}/${token}`;
 
     const transporter = nodemailer.createTransport({
-        service: "gmail",
+        service: 'gmail',
         auth: {
-            user: process.env.USER_EMAIL,// my gmail
-            pass: process.env.USER_PASS,// gmail app password
-        }
+            user: process.env.USER_EMAIL, // my gmail
+            pass: process.env.USER_PASS, // gmail app password
+        },
     });
 
     const mailOptions = {
         from: process.env.USER_EMAIL, // your Gmail address
         to: user.email,
-        subject: "Reset Your Password - Action Required",
+        subject: 'Reset Your Password - Action Required',
         html: `
         <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
             <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
@@ -69,22 +71,19 @@ const sendForgotPasswordLink = asyncHandler(async (req, res) => {
                     If you didn’t request this email, you can safely ignore it. This email is automatically generated.
                 </p>
             </div>
-        </div>`
+        </div>`,
     };
-
 
     transporter.sendMail(mailOptions, function (error, success) {
         if (error) {
             console.log(error);
-            res.status(500).json({ message: "Something Wrong! (Failed)" })
+            res.status(500).json({ message: 'Something Wrong! (Failed)' });
         } else {
-            console.log("Email sent: " + success.response);
-            res.render("link-send");
+            console.log('Email sent: ' + success.response);
+            res.render('link-send');
         }
     });
-
-})
-
+});
 
 /**
  *  @desc    Get Reset Password Link
@@ -95,7 +94,9 @@ const sendForgotPasswordLink = asyncHandler(async (req, res) => {
 const getForgotPasswordLink = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userId);
     if (!user) {
-        return res.status(404).json({ message: "User not found! (No Account For This Email)" });
+        return res
+            .status(404)
+            .json({ message: 'User not found! (No Account For This Email)' });
     }
 
     const secretKey = process.env.JWT_SECRET_KEY + user.password;
@@ -105,30 +106,33 @@ const getForgotPasswordLink = asyncHandler(async (req, res) => {
         res.render('reset-password', { email: user.email });
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
-            return res.status(400).json({ message: "Token has expired. Please request a new password reset link." });
+            return res.status(400).json({
+                message:
+                    'Token has expired. Please request a new password reset link.',
+            });
         }
         console.log(error);
-        res.status(400).json({ message: "Failed to verify token" });
+        res.status(400).json({ message: 'Failed to verify token' });
     }
 });
 
-
 /**
- *  @desc    Reset Password 
+ *  @desc    Reset Password
  *  @route   /password/reset-password/:userId/:token
  *  @method  POST
  *  @access  public
  */
 const getResetPassword = asyncHandler(async (req, res) => {
-
     const { error } = validateChangePassword(req.body);
     if (error) {
-        return res.status(400).json({ message: error.details[0].message })
+        return res.status(400).json({ message: error.details[0].message });
     }
 
     const user = await User.findById(req.params.userId);
     if (!user) {
-        return res.status(404).json({ message: "User not found! (No Account For This Email)" })
+        return res
+            .status(404)
+            .json({ message: 'User not found! (No Account For This Email)' });
     }
 
     const secretKey = process.env.JWT_SECRET_KEY + user.password;
@@ -142,19 +146,16 @@ const getResetPassword = asyncHandler(async (req, res) => {
         user.password = hashedPassword;
 
         await user.save();
-        res.render('success-password')
-
+        res.render('success-password');
     } catch (error) {
         console.log(error);
-        res.json({ message: "Failed" })
+        res.json({ message: 'Failed' });
     }
-
-})
-
+});
 
 module.exports = {
     getForgotPassword,
     sendForgotPasswordLink,
     getForgotPasswordLink,
-    getResetPassword
-}
+    getResetPassword,
+};
